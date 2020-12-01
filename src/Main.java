@@ -5,24 +5,8 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		DataBase db = new DataBase();
 
-		try {
-			Class.forName("org.postgresql.Driver");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Driver PostgreSQL manquant !");
-			System.exit(1);
-		}
 
-		String url = "jdbc:postgresql://127.0.0.1:5432/dbu2binDEFOY";
-
-		try {
-			conn = DriverManager.getConnection(url, "postgres", "azerty");
-		} catch (SQLException e) {
-			System.out.println("Impossible de joindre le server !");
-			System.exit(1);
-		}
 
 		Scanner scan = new Scanner(System.in);
 		int option = 0;
@@ -31,7 +15,7 @@ public class Main {
 
 			System.out.println(" 1 : Créer un local \n 2 : Créer un examen \n 3 : Encoder l'heure d'un examen \n"
 					+ " 4 : Réserver un local pour un examen \n 5 : Visualiser l'horaire d'examens pour un bloc \n 6 : Visualiser toutes les réservations d'un local \n"
-					+ " 7 : Visualiser tous les examens qui ne sont pas complètement réservés \n 8 : Visualiser le nombre d'examens non complètement réservés pour chaque bloc"
+					+ " 7 : Visualiser tous les examens qui ne sont pas complètement réservés \n 8 : Visualiser le nombre d'examens non complètement réservés pour chaque bloc \n"
 					+ " 9 : Quitter l'application");
 			System.out.print("Choissisez une option : ");
 
@@ -46,7 +30,7 @@ public class Main {
 				int place = scan.nextInt();
 				System.out.println("Possède des machines (true/false) : ");
 				boolean machine = scan.nextBoolean();
-				creerLocal(nom, place, machine);
+				db.creerLocal(nom, place, machine);
 				break;
 			case 2:
 				break;
