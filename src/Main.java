@@ -18,7 +18,7 @@ public class Main {
 		String url = "jdbc:postgresql://127.0.0.1:5432/dbu2binDEFOY";
 
 		try {
-			conn = DriverManager.getConnection(url, "postgres", "@Ballon#2");
+			conn = DriverManager.getConnection(url, "postgres", "azerty");
 		} catch (SQLException e) {
 			System.out.println("Impossible de joindre le server !");
 			System.exit(1);
