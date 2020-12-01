@@ -2,40 +2,39 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class DataBase {
-	private static Connection conn = null;
-
-	public static void creerLocal(String nom, int nbrPlaces, boolean possedeMachine) {
+	
+	static PreparedStatement psInsererLocal;
+	static PreparedStatement psInsererExamen;
+	static PreparedStatement psInsererHeureDebut;
+	static PreparedStatement psInsererExamenLocal;
+	static PreparedStatement psVisualiserHoraireExamenBloc;
+	static PreparedStatement psVisualiserExamenDansLocal;
+	static PreparedStatement psExamensNonCompletementReserves;
+	static PreparedStatement psExamensNonReservesParBloc;
+	
+	//Constructor
+	public DataBase () {
+		Connection conn = connectToDb("postgres", "azerty");
 		try {
-			PreparedStatement ps = conn
-					.prepareStatement("INSERT INTO" + " projetSQL.locaux VALUES (DEFAULT, ?, ?, ?);");
-			ps.setString(1, nom);
-			ps.setInt(2, nbrPlaces);
-			ps.setBoolean(3, possedeMachine);
-			ps.executeUpdate();
+			psInsererLocal = conn.prepareStatement("SELECT projetSQL.insererLocal(?,?,?)");
+			psInsererExamen = conn.prepareStatement("SELECT projetSQL.insererExamen(?,?,?,?,?)");
+			psInsererHeureDebut = conn.prepareStatement("SELECT projetSQL.insererHeureDebut(?,?)");
+			psInsererExamenLocal = conn.prepareStatement("SELECT projetSQL.insererExamenLocal(?,?)");
+			psVisualiserHoraireExamenBloc = conn.prepareStatement("SELECT * FROM projetSQL.HoraireExamenBloc WHERE \"Code bloc\" = ?");
+			psVisualiserExamenDansLocal = conn.prepareStatement("SELECT * FROM projetSQL.ExamenDansLocal WHERE \"Nom local\" = ?");
+			psExamensNonCompletementReserves = conn.prepareStatement("SELECT * FROM projetSQL.ExamensNonCompletementReserves");
+			psExamensNonReservesParBloc = conn.prepareStatement("SELECT * FROM projetSQL.ExamensNonReservesParBloc WHERE \"Code bloc\" = ?");
 		} catch (SQLException se) {
-			System.out.println("Erreur lors de l’insertion !");
-			System.out.println(se.getMessage());
-			System.exit(1);
+			se.printStackTrace();
 		}
-
 	}
 	
-	public static void creerExamen(String codeExamen, String codeBloc, String nom, int duree, boolean estSurMachine) {
+	
+	//Connection to dataBase
+	private Connection connectToDb(String username, String password) {
 		
-		ResultSet rs = null;
-		try {
-			//statement
-			try (ResultSet rs = )
-			
-		} catch (SQLException se) {
-			 se.printStackTrace();
-		}
-
+		Connection conn = null;
 		
-	}
-
-	public static void main(String[] args) {
-
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e) {
@@ -46,53 +45,42 @@ public class DataBase {
 		String url = "jdbc:postgresql://127.0.0.1:5432/dbu2binDEFOY";
 
 		try {
-			conn = DriverManager.getConnection(url, "postgres", "@Ballon#2");
+			conn = DriverManager.getConnection(url, username, password);
 		} catch (SQLException e) {
 			System.out.println("Impossible de joindre le server !");
 			System.exit(1);
 		}
-
-		Scanner scan = new Scanner(System.in);
-		int option = 0;
-
-		while (option != 9) {
-
-			System.out.println(" 1 : Créer un local \n 2 : Créer un examen \n 3 : Encoder l'heure d'un examen \n"
-					+ " 4 : Réserver un local pour un examen \n 5 : Visualiser l'horaire d'examens pour un bloc \n 6 : Visualiser toutes les réservations d'un local \n"
-					+ " 7 : Visualiser tous les examens qui ne sont pas complètement réservés \n 8 : Visualiser le nombre d'examens non complètement réservés pour chaque bloc"
-					+ " 9 : Quitter l'application");
-			System.out.print("Choissisez une option : ");
-
-			option = scan.nextInt();
-
-			switch (option) {
-			case 1:
-				System.out.println("création d'un local ");
-				System.out.println("Nom du local : ");
-				String nom = scan.next();
-				System.out.println("Nombre de places : ");
-				int place = scan.nextInt();
-				System.out.println("Possède des machines (true/false) : ");
-				boolean machine = scan.nextBoolean();
-				creerLocal(nom, place, machine);
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
-				break;
-			case 6:
-				break;
-			case 7:
-				break;
-			case 8:
-				break;
-			case 9:
-				break;
-			}
-		}
+		
+		return conn;
+		
 	}
+
+	public static void creerLocal(String nom, int nbrPlaces, boolean possedeMachine) {
+		try {
+			psInsererLocal.setString(1, nom);
+			psInsererLocal.setInt(2, nbrPlaces);
+			psInsererLocal.setBoolean(3, possedeMachine);
+			psInsererLocal.execute();
+			System.out.println("Local bien ajouté \n");
+		} catch (SQLException se) {
+			System.out.println("Erreur lors de l’insertion !");
+			System.out.println(se.getMessage());
+			System.exit(1);
+		}
+
+	}
+	
+	/*public static void creerExamen(String codeExamen, String codeBloc, String nom, int duree, boolean estSurMachine) {
+		
+		ResultSet rs = null;
+		try {
+			//statement
+			try (ResultSet rs = )
+			
+		} catch (SQLException se) {
+			System.out.println(se.getMessage());
+		}
+
+		
+	}*/
 }
