@@ -2,6 +2,8 @@ package AppUtilisateur;
 
 import java.util.Scanner;
 
+import Cryptage.BCrypt;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -25,7 +27,7 @@ public class Main {
 
 			switch (option) {
 			case 1:
-				System.out.println("Incrivez-vous : ");
+				System.out.println("Incrivez-vous ! ");
 				System.out.print("Nom : ");
 				String nom = scan.nextLine();
 				System.out.print("Prenom : ");
@@ -34,12 +36,14 @@ public class Main {
 				String mail = scan.nextLine();
 				System.out.print("Mot de passe : ");
 				String mdp = scan.nextLine();
+				String sel=BCrypt.gensalt();
+				mdp = BCrypt.hashpw(mdp, sel);
 				System.out.print("Code bloc : ");
 				String codeBloc = scan.nextLine();
 				db.inscription(nom,prenom,mail,mdp,codeBloc);
 				break;
 			case 2:
-				System.out.println("Connectez-vous : ");
+				System.out.println("Connectez-vous ! ");
 				System.out.print("Nom : ");
 				nom = scan.nextLine();
 				System.out.print("Mot de passe : ");
@@ -54,8 +58,51 @@ public class Main {
 				break;
 			}
 		}
+		System.out.print("Vous êtes maintenant connecté ! \n ");
+		System.out.println(" 1 : S'inscrire \n 2 : Se connecter \n 3 : \n 4 : \n");
+		System.out.print("Choissisez une option : ");
+		option = scan.nextInt();
+
+		scan.nextLine();
 		
-		scan.close();
+		switch (option) {
+		case 1:
+			System.out.println("Incrivez-vous ! ");
+			System.out.print("Nom : ");
+			String nom = scan.nextLine();
+			System.out.print("Prenom : ");
+			String prenom = scan.nextLine();
+			System.out.print("Mail : ");
+			String mail = scan.nextLine();
+			System.out.print("Mot de passe : ");
+			String mdp = scan.nextLine();
+			System.out.print("Code bloc : ");
+			String codeBloc = scan.nextLine();
+			db.inscription(nom,prenom,mail,mdp,codeBloc);
+			break;
+		case 2:
+			System.out.println("Connectez-vous ! ");
+			System.out.print("Nom : ");
+			nom = scan.nextLine();
+			System.out.print("Mot de passe : ");
+			mdp = scan.nextLine();
+			sessionId = db.connexion(nom,mdp);
+			if(sessionId != 0) {
+				connected = true;
+				System.out.println("Bienvenue " + nom + ", vous êtes maintenant connecté!");
+			} else {
+				System.out.println("Nom ou mot de passe éroné \n");
+			};
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			scan.close();
+			break;
+		}
+		
 	}
 
 }

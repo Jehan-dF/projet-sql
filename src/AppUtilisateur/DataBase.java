@@ -12,7 +12,7 @@ public class DataBase {
 		Connection conn = connectToDb("postgres", "azerty");
 		try {
 			psInsererEtudiant = conn.prepareStatement("SELECT projetSQL.insererEtudiant(?,?,?,?,?)");
-			psConnexion = conn.prepareStatement("SELECT projetSQL.connexion(?,?)");
+			psConnexion = conn.prepareStatement("SELECT projetSQL.connexion(?)");
 			
 			psRecupererBlocId = conn.prepareStatement("SELECT b.bloc_id FROM projetSQL.Blocs b WHERE b.code = ?");
 		} catch (SQLException se) {
@@ -72,10 +72,10 @@ public class DataBase {
 			ResultSet rs=null;
 			try {			
 				psConnexion.setString(1, nom);
-				psConnexion.setString(2, mdp);
 				rs = psConnexion.executeQuery(); {
 					while (rs.next()) {
 						sessionId = rs.getString(1);
+						
 					}
 				}			
 				
