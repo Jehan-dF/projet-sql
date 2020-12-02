@@ -1,5 +1,5 @@
 import java.sql.*;
-import java.util.Scanner;
+
 
 public class DataBase {
 	
@@ -69,9 +69,12 @@ public class DataBase {
 		}
 
 	}
-	
-	/*public static void creerExamen(String codeExamen, String codeBloc, String nom, int duree, boolean estSurMachine) {
-		
+	public static void creerExamenLocal(String nomLocal,String codeExamen) {
+
+	}
+	public static void creerExamen(String codeExamen, String codeBloc, String nom, int duree, boolean estSurMachine) {
+	}
+	/*
 		ResultSet rs = null;
 		try {
 			//statement

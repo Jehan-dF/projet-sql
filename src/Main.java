@@ -1,12 +1,9 @@
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 import java.util.Scanner;
 
 public class Main {
 
 	public static void main(String[] args) {
-
-
 
 		Scanner scan = new Scanner(System.in);
 		int option = 0;
@@ -23,20 +20,40 @@ public class Main {
 
 			switch (option) {
 			case 1:
-				System.out.println("création d'un local ");
+				System.out.println("Insertion d'un local ");
 				System.out.println("Nom du local : ");
-				String nom = scan.next();
-				System.out.println("Nombre de places : ");
+				String nomL = scan.next();
+				System.out.println("Nombre de places du local : ");
 				int place = scan.nextInt();
-				System.out.println("Possède des machines (true/false) : ");
-				boolean machine = scan.nextBoolean();
-				db.creerLocal(nom, place, machine);
+				System.out.println("Le local possède t'il des machines ? (true/false) : ");
+				boolean machineL = scan.nextBoolean();
+				DataBase.creerLocal(nomL, place, machineL);
 				break;
 			case 2:
+				System.out.println("Insertion d'un examen ");
+				System.out.println("Code de l'examen : ");
+				String code = scan.next();
+				System.out.println("Bloc de l'examen : ");
+				String bloc = scan.next();
+				System.out.println("Nom de l'examen : ");
+				String nomE = scan.next();
+				System.out.println("Durée de l'examen : ");
+				int duree = scan.nextInt();
+				System.out.println("L'examen est il sur machine ? (true/false) : ");
+				boolean machineE = scan.nextBoolean();
+				DataBase.creerExamen(code, bloc, nomE, duree, machineE);
+				
 				break;
 			case 3:
+				System.out.println("Insertion d'une heure de début ");
 				break;
 			case 4:
+				System.out.println("Insertion d'un examen dans un local ");
+				System.out.println("Code de l'examen : ");
+				String codeEL = scan.next();
+				System.out.println("Nom du local : ");
+				String nomEL = scan.next();
+				DataBase.creerExamenLocal(nomEL, codeEL);
 				break;
 			case 5:
 				break;
@@ -47,8 +64,10 @@ public class Main {
 			case 8:
 				break;
 			case 9:
+				scan.close();
 				break;
 			}
 		}
+		
 	}
 }
