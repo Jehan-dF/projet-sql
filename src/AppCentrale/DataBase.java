@@ -140,7 +140,7 @@ public class DataBase {
 			rs = psVisualiserHoraireExamensBloc.executeQuery();
 			{
 				while (rs.next()) {
-					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + "\n \n");
+					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + "\n");
 				}
 			}
 		} catch (SQLException se) {
@@ -158,7 +158,7 @@ public class DataBase {
 			rs = psVisualiserExamensDansLocal.executeQuery();
 			{
 				while (rs.next()) {
-					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "\n \n");
+					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "\n");
 				}
 			}
 		} catch (SQLException se) {
@@ -175,7 +175,7 @@ public class DataBase {
 			rs = psExamensNonCompletementReserves.executeQuery();
 			{
 				while (rs.next()) {
-					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " " + rs.getString(6) + "\n \n");
+					System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " " + rs.getString(6) + "\n");
 				}
 			}
 		} catch (SQLException se) {
@@ -193,7 +193,7 @@ public class DataBase {
 			rs = psNombreExamensNonReservesParBloc.executeQuery();
 			{
 				while (rs.next()) {
-					System.out.println(rs.getString(1) + " " + rs.getString(2) + "\n \n");
+					System.out.println(rs.getString(1) + " " + rs.getString(2) + "\n");
 				}
 			}
 		} catch (SQLException se) {

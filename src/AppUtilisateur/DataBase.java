@@ -1,10 +1,17 @@
 package AppUtilisateur;
 import java.sql.*;
 
+import Cryptage.BCrypt;
+
 public class DataBase {
 	
 	static PreparedStatement psInsererEtudiant;
 	static PreparedStatement psConnexion;
+	static PreparedStatement psConnexionMdpCrypt;
+	static PreparedStatement psListeExamens;
+	static PreparedStatement psInsererEtudiantExamen;
+	static PreparedStatement psInscriptionTousExamensUnBloc;
+	static PreparedStatement psVisualiserHoraireExamens;
 	
 	static PreparedStatement psRecupererBlocId;
 	
@@ -13,6 +20,11 @@ public class DataBase {
 		try {
 			psInsererEtudiant = conn.prepareStatement("SELECT projetSQL.insererEtudiant(?,?,?,?,?)");
 			psConnexion = conn.prepareStatement("SELECT projetSQL.connexion(?)");
+			psConnexionMdpCrypt = conn.prepareStatement("SELECT projetSQL.connexionMdpCrypt(?)");
+			psListeExamens = conn.prepareStatement("SELECT * FROM projetSQL.ListeExamens");
+			psInsererEtudiantExamen = conn.prepareStatement("SELECT projetSQL.insererEtudiantExamen(?,?)");
+			psInscriptionTousExamensUnBloc = conn.prepareStatement("SELECT projetSQL.inscriptionTousExamensUnBloc(?)");
+			psVisualiserHoraireExamens = conn.prepareStatement("SELECT * FROM projetSQL.HoraireExamens WHERE \"Etudiant id\" = ?");
 			
 			psRecupererBlocId = conn.prepareStatement("SELECT b.bloc_id FROM projetSQL.Blocs b WHERE b.code = ?");
 		} catch (SQLException se) {
@@ -67,15 +79,17 @@ public class DataBase {
 		
 		public int connexion(String nom, String mdp) {
 			
+			Boolean mdpCorrect = false;
 			String sessionId = null;
 			
 			ResultSet rs=null;
+			
+			//Comparison passwords
 			try {			
-				psConnexion.setString(1, nom);
-				rs = psConnexion.executeQuery(); {
+				psConnexionMdpCrypt.setString(1, nom);
+				rs = psConnexionMdpCrypt.executeQuery(); {
 					while (rs.next()) {
-						sessionId = rs.getString(1);
-						
+						mdpCorrect = BCrypt.checkpw(mdp,rs.getString(1));						
 					}
 				}			
 				
@@ -83,10 +97,89 @@ public class DataBase {
 				System.out.println(se.getMessage());
 			}
 			
+			//If correct password : get etudiant_id
+			if(mdpCorrect) {
+				try {			
+					psConnexion.setString(1, nom);
+					rs = psConnexion.executeQuery(); {
+						while (rs.next()) {
+							sessionId = rs.getString(1);						
+						}
+					}			
+					
+				} catch (SQLException se) {
+					System.out.println(se.getMessage());
+				}
+			}
+			
+			//If connection succeed return etudiant_id , else return 0
 			if(sessionId == null) {
 				return 0;
 			} else {
 				return Integer.parseInt(sessionId);
+			}
+		}
+		
+		public void visualiserExamens() {
+			
+			ResultSet rs = null;
+
+			try {
+				rs = psListeExamens.executeQuery();
+				{
+					while (rs.next()) {
+						System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "\n");
+					}
+				}
+			} catch (SQLException se) {
+				System.out.println(se.getMessage());
+			}
+						
+		}
+		
+		public void inscriptionExamen(int etudiantId, String codeExamen) {
+			
+			try {
+				psInsererEtudiantExamen.setInt(1, etudiantId);
+				psInsererEtudiantExamen.setString(2, codeExamen);
+				psInsererEtudiantExamen.execute();
+				System.out.println("Inscription à l'examen validée \n");
+			} catch (SQLException se) {
+				System.out.println("Erreur lors de l’insertion !");
+				System.out.println(se.getMessage());
+				System.exit(1);
+			}
+			
+		}
+		
+		public void inscriptionTousExamenBloc(int etudiantId) {
+			
+			try {
+				psInscriptionTousExamensUnBloc.setInt(1, etudiantId);
+				psInscriptionTousExamensUnBloc.execute();
+				System.out.println("Inscription à tous les examens du bloc validée \n");
+			} catch (SQLException se) {
+				System.out.println("Erreur lors de l’insertion !");
+				System.out.println(se.getMessage());
+				System.exit(1);
+			}
+			
+		}
+		
+		public void visualiserHoraireExamen(int etudiantId) {
+						
+			ResultSet rs = null;
+
+			try {
+				psVisualiserHoraireExamens.setInt(1, etudiantId);
+				rs = psVisualiserHoraireExamens.executeQuery();
+				{
+					while (rs.next()) {
+						System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " " + rs.getString(6) + "\n");
+					}
+				}
+			} catch (SQLException se) {
+				System.out.println(se.getMessage());
 			}
 		}
 		
