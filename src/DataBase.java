@@ -42,7 +42,7 @@ public class DataBase {
 			System.exit(1);
 		}
 
-		String url = "jdbc:postgresql://127.0.0.1:5432/dbu2binDEFOY";
+		String url = "jdbc:postgresql://127.0.0.1:5432/dbu2binDORREKENS";
 
 		try {
 			conn = DriverManager.getConnection(url, username, password);

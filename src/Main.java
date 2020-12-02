@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
+		DataBase db = new DataBase();
 
 		Scanner scan = new Scanner(System.in);
 		int option = 0;
@@ -27,7 +28,7 @@ public class Main {
 				int place = scan.nextInt();
 				System.out.println("Le local possède t'il des machines ? (true/false) : ");
 				boolean machineL = scan.nextBoolean();
-				DataBase.creerLocal(nomL, place, machineL);
+				db.creerLocal(nomL, place, machineL);
 				break;
 			case 2:
 				System.out.println("Insertion d'un examen ");
@@ -41,7 +42,7 @@ public class Main {
 				int duree = scan.nextInt();
 				System.out.println("L'examen est il sur machine ? (true/false) : ");
 				boolean machineE = scan.nextBoolean();
-				DataBase.creerExamen(code, bloc, nomE, duree, machineE);
+				db.creerExamen(code, bloc, nomE, duree, machineE);
 				
 				break;
 			case 3:
@@ -53,7 +54,7 @@ public class Main {
 				String codeEL = scan.next();
 				System.out.println("Nom du local : ");
 				String nomEL = scan.next();
-				DataBase.creerExamenLocal(nomEL, codeEL);
+				db.creerExamenLocal(nomEL, codeEL);
 				break;
 			case 5:
 				break;
