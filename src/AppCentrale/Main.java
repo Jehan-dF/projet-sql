@@ -1,3 +1,4 @@
+package AppCentrale;
 import java.util.Scanner;
 
 
