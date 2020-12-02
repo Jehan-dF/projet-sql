@@ -1,9 +1,10 @@
-
 import java.util.Scanner;
+
 
 public class Main {
 
 	public static void main(String[] args) {
+		
 		DataBase db = new DataBase();
 
 		Scanner scan = new Scanner(System.in);
@@ -18,12 +19,14 @@ public class Main {
 			System.out.print("Choissisez une option : ");
 
 			option = scan.nextInt();
+			
+			scan.nextLine();
 
 			switch (option) {
 			case 1:
 				System.out.println("Insertion d'un local ");
 				System.out.println("Nom du local : ");
-				String nomL = scan.next();
+				String nomL = scan.nextLine();
 				System.out.println("Nombre de places du local : ");
 				int place = scan.nextInt();
 				System.out.println("Le local possède t'il des machines ? (true/false) : ");
@@ -33,11 +36,11 @@ public class Main {
 			case 2:
 				System.out.println("Insertion d'un examen ");
 				System.out.println("Code de l'examen : ");
-				String code = scan.next();
+				String code = scan.nextLine();
 				System.out.println("Bloc de l'examen : ");
-				String bloc = scan.next();
+				String bloc = scan.nextLine();
 				System.out.println("Nom de l'examen : ");
-				String nomE = scan.next();
+				String nomE = scan.nextLine();
 				System.out.println("Durée de l'examen : ");
 				int duree = scan.nextInt();
 				System.out.println("L'examen est il sur machine ? (true/false) : ");
@@ -47,22 +50,41 @@ public class Main {
 				break;
 			case 3:
 				System.out.println("Insertion d'une heure de début ");
+				System.out.println("Code de l'examen : ");
+				code = scan.nextLine();
+				System.out.print("Heure debut \n(format : aaaa-MM-jj hh:mm ) : ");
+				String heureDebut = scan.nextLine();
+				db.insererHeureDebut(code,heureDebut);
 				break;
 			case 4:
-				System.out.println("Insertion d'un examen dans un local ");
+				System.out.println("Reservation d'un local pour un examen : ");
 				System.out.println("Code de l'examen : ");
-				String codeEL = scan.next();
+				String codeEL = scan.nextLine();
 				System.out.println("Nom du local : ");
-				String nomEL = scan.next();
+				String nomEL = scan.nextLine();
 				db.creerExamenLocal(nomEL, codeEL);
 				break;
 			case 5:
+				System.out.println("Visualiser l'horaire d'examens pour un bloc : ");
+				System.out.println("Code du bloc : ");
+				String codeVH = scan.nextLine();
+				db.visualiserHoraireBloc(codeVH);
 				break;
 			case 6:
+				System.out.println("Visualiser toutes les réservations d'un local : ");
+				System.out.println("Nom du local : ");
+				String nomVR = scan.nextLine();
+				db.visualiserExamenDansLocal(nomVR);
 				break;
 			case 7:
+				System.out.println("Visualiser tous les examens non complètement réservés : ");
+				db.visualiserExamensNonCompletementReserves();
 				break;
 			case 8:
+				System.out.println("Visualiser le nombre d'examens non complètement réservés pour chaque bloc : ");
+				System.out.println("Code du bloc : ");
+				String codeVN = scan.nextLine();
+				db.nombreExamensNonReservesParBloc(codeVN);
 				break;
 			case 9:
 				scan.close();
