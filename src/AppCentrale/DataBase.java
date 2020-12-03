@@ -25,7 +25,7 @@ public class DataBase {
 			psVisualiserHoraireExamensBloc = conn.prepareStatement("SELECT * FROM projetSQL.HoraireExamensBloc WHERE \"Code bloc\" = ?");
 			psVisualiserExamensDansLocal = conn.prepareStatement("SELECT * FROM projetSQL.ExamensDansLocal WHERE \"Nom local\" = ?");
 			psExamensNonCompletementReserves = conn.prepareStatement("SELECT * FROM projetSQL.ExamensNonCompletementReserves");
-			psNombreExamensNonReservesParBloc = conn.prepareStatement("SELECT * FROM projetSQL.NombreExamensNonReservesParBloc WHERE \"Code du bloc\" = ?");
+			psNombreExamensNonReservesParBloc = conn.prepareStatement("SELECT * FROM projetSQL.NombreExamensNonReservesParBloc");
 			psRecupererBlocId = conn.prepareStatement("SELECT b.bloc_id FROM projetSQL.Blocs b WHERE b.code = ?");
 			psRecupererLocalId = conn.prepareStatement("SELECT l.local_id FROM projetSQL.locaux l WHERE l.nom = ?");
 		} catch (SQLException se) {
@@ -184,12 +184,11 @@ public class DataBase {
 		
 	}
 	
-	public void nombreExamensNonReservesParBloc(String codeBloc) {
+	public void visualiserNombreExamensNonReservesParBloc() {
 		
 		ResultSet rs = null;
 
 		try {
-			psNombreExamensNonReservesParBloc.setString(1, codeBloc);
 			rs = psNombreExamensNonReservesParBloc.executeQuery();
 			{
 				while (rs.next()) {

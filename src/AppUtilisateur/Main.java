@@ -61,7 +61,7 @@ public class Main {
 		
 		//Switch 2, accessible when connected
 		while(option != 5) {
-			System.out.println(" 1 : Visualiser les examens \n 2 : S'inscrire à un examen \n 3 : S'inscrire à tous les examens de son bloc \n 4 : Voir son horaire d'examen \n");
+			System.out.println(" 1 : Visualiser les examens \n 2 : S'inscrire à un examen \n 3 : S'inscrire à tous les examens de son bloc \n 4 : Voir son horaire d'examen \n 5 : Quitter l'application \n");
 			System.out.print("Choissisez une option : ");
 			option = scan.nextInt();
 	

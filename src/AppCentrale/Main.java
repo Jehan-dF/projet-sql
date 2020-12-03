@@ -53,7 +53,7 @@ public class Main {
 				System.out.println("Insertion d'une heure de début ");
 				System.out.println("Code de l'examen : ");
 				code = scan.nextLine();
-				System.out.print("Heure debut \n(format : aaaa-MM-jj hh:mm ) : ");
+				System.out.print("Heure debut \n(format : aaaa-MM-jj hh:mm:ss ) : ");
 				String heureDebut = scan.nextLine();
 				db.insererHeureDebut(code,heureDebut);
 				break;
@@ -83,9 +83,7 @@ public class Main {
 				break;
 			case 8:
 				System.out.println("Visualiser le nombre d'examens non complètement réservés pour chaque bloc : ");
-				System.out.println("Code du bloc : ");
-				String codeVN = scan.nextLine();
-				db.nombreExamensNonReservesParBloc(codeVN);
+				db.visualiserNombreExamensNonReservesParBloc();
 				break;
 			case 9:
 				scan.close();
