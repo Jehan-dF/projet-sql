@@ -33,6 +33,7 @@ public class Main {
 				System.out.println("Le local possède t'il des machines ? (true/false) : ");
 				boolean machineL = scan.nextBoolean();
 				db.creerLocal(nomL, place, machineL);
+				System.out.println("\n");
 				break;
 			case 2:
 				System.out.println("Insertion d'un examen ");
@@ -47,7 +48,7 @@ public class Main {
 				System.out.println("L'examen est il sur machine ? (true/false) : ");
 				boolean machineE = scan.nextBoolean();
 				db.creerExamen(code, bloc, nomE, duree, machineE);
-				
+				System.out.println("\n");
 				break;
 			case 3:
 				System.out.println("Insertion d'une heure de début ");
@@ -56,6 +57,7 @@ public class Main {
 				System.out.print("Heure debut \n(format : aaaa-MM-jj hh:mm:ss ) : ");
 				String heureDebut = scan.nextLine();
 				db.insererHeureDebut(code,heureDebut);
+				System.out.println("\n");
 				break;
 			case 4:
 				System.out.println("Reservation d'un local pour un examen : ");
@@ -64,26 +66,35 @@ public class Main {
 				System.out.println("Nom du local : ");
 				String nomEL = scan.nextLine();
 				db.creerExamenLocal(nomEL, codeEL);
+				System.out.println("\n");
 				break;
 			case 5:
 				System.out.println("Visualiser l'horaire d'examens pour un bloc : ");
 				System.out.println("Code du bloc : ");
 				String codeVH = scan.nextLine();
+				System.out.println("code bloc || heure début         || code examen || nom examen || nombre locaux réservé");
 				db.visualiserHoraireBloc(codeVH);
+				System.out.println("\n");
 				break;
 			case 6:
 				System.out.println("Visualiser toutes les réservations d'un local : ");
 				System.out.println("Nom du local : ");
 				String nomVR = scan.nextLine();
+				System.out.println("nom local || heure début         || code examen || nom examen ");
 				db.visualiserExamenDansLocal(nomVR);
+				System.out.println("\n");
 				break;
 			case 7:
 				System.out.println("Visualiser tous les examens non complètement réservés : ");
+				System.out.println("code examen || nom examen || bloc id || heure de début      || durée  || sur machine ");
 				db.visualiserExamensNonCompletementReserves();
+				System.out.println("\n");
 				break;
 			case 8:
 				System.out.println("Visualiser le nombre d'examens non complètement réservés pour chaque bloc : ");
+				System.out.println("Bloc   || nombre d'examens non réservés " );
 				db.visualiserNombreExamensNonReservesParBloc();
+				System.out.println("\n");
 				break;
 			case 9:
 				scan.close();

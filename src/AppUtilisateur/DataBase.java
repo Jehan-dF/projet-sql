@@ -44,7 +44,7 @@ public class DataBase {
 				System.exit(1);
 			}
 
-			String url = "jdbc:postgresql://127.0.0.1:5432/dbu2binDEFOY";
+			String url = "jdbc:postgresql://127.0.0.1:5432/dbu2binDORREKENS";
 
 			try {
 				conn = DriverManager.getConnection(url, username, password);
@@ -72,7 +72,7 @@ public class DataBase {
 			} catch (SQLException se) {
 				System.out.println("Erreur lors de l’insertion !");
 				System.out.println(se.getMessage());
-				System.exit(1);
+				
 			}
 			
 		}
@@ -128,7 +128,11 @@ public class DataBase {
 				rs = psListeExamens.executeQuery();
 				{
 					while (rs.next()) {
-						System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + "\n");
+						String espaceNom = "";
+						for(int i = 0 ; i<(11-rs.getString(2).length());i++) {
+							espaceNom += " ";
+						}
+						System.out.println(rs.getString(1) + "      || " + rs.getString(2) +  espaceNom + "|| " + rs.getString(3) + "       || " + rs.getString(4));
 					}
 				}
 			} catch (SQLException se) {
@@ -147,7 +151,7 @@ public class DataBase {
 			} catch (SQLException se) {
 				System.out.println("Erreur lors de l’insertion !");
 				System.out.println(se.getMessage());
-				System.exit(1);
+				
 			}
 			
 		}
@@ -161,7 +165,7 @@ public class DataBase {
 			} catch (SQLException se) {
 				System.out.println("Erreur lors de l’insertion !");
 				System.out.println(se.getMessage());
-				System.exit(1);
+				
 			}
 			
 		}
@@ -175,7 +179,16 @@ public class DataBase {
 				rs = psVisualiserHoraireExamens.executeQuery();
 				{
 					while (rs.next()) {
-						System.out.println(rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " " + rs.getString(6) + "\n");
+						String espaceNom = "";
+						for(int i = 0 ; i<(11-rs.getString(2).length());i++) {
+							espaceNom += " ";
+						}
+						if(rs.getString(4) == null) {
+							System.out.println(rs.getString(1) + "      || " + rs.getString(2) +  espaceNom + "|| " + rs.getString(3) + "       || " + rs.getString(4) + "                || " + rs.getString(5) + "                || " + rs.getString(6) );	
+						}
+						else {
+							System.out.println(rs.getString(1) + "      || " + rs.getString(2) + espaceNom + "|| " + rs.getString(3) + "       || " + rs.getString(4) + " || " + rs.getString(5) + " || " + rs.getString(6));	
+						}
 					}
 				}
 			} catch (SQLException se) {

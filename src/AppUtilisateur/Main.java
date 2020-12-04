@@ -70,21 +70,27 @@ public class Main {
 			switch (option) {
 			case 1:
 				System.out.println("Visualiser les examens ");
+				System.out.println("code examen || nom examen || bloc id || durée");
 				db.visualiserExamens();
+				System.out.println("\n");
 				break;
 			case 2:
 				System.out.println("S'inscrire à un examen");
 				System.out.print("Code de l'examen : ");
 				String codeExamen = scan.nextLine();
 				db.inscriptionExamen(sessionId, codeExamen);
+				System.out.println("\n");
 				break;
 			case 3:
 				System.out.println("S'inscrire à tous les examens de son bloc");
 				db.inscriptionTousExamenBloc(sessionId);
+				System.out.println("\n");
 				break;
 			case 4:
 				System.out.println("Voir son horaire d'examen");
+				System.out.println("code examen || nom examen || bloc id || heure de début      || heure de fin        || liste des locaux");
 				db.visualiserHoraireExamen(sessionId);
+				System.out.println("\n");
 				break;
 			case 5:
 				scan.close();
